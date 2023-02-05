@@ -2,7 +2,7 @@ import SimpleLightbox from 'simplelightbox';
 import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
-import { findLastIndex } from 'lodash';
+// import { findLastIndex } from 'lodash';
 const userId = '33355093-a15ac59f0161a10cfc7b50674';
 const requestUrl = 'https://pixabay.com/api/?';
 const emptyRequest =
@@ -11,6 +11,7 @@ const endOfRequest =
   "We're sorry, but you've reached the end of search results.";
 const formRequest = document.querySelector('#search-form');
 const galleryDesk = document.querySelector('.gallery');
+const loadBtn = document.querySelector('.load-more');
 // const findText = '';
 let totalHits = 0;
 // const totalImagesInRequest = `'Hooray! We found ${totalHits} images.'`;
@@ -71,6 +72,9 @@ formRequest.addEventListener('submit', e => {
     // return request.data;
   }
   getImage().then(() => {
+    numPage += 1;
+    loadBtn.removeAttribute('hidden');
+
     createCardImage(responseArray);
     console.log;
   });
@@ -80,7 +84,7 @@ function createCardImage(responseArray) {
     .map(
       arrItem => `
        
-      <a class="image-link" href="${largeImageURL}">
+      <a class="image-link" href="${arrItem.largeImageURL}">
         <div class="photo-card">
         <img class="gallery-image" src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" width=320px height=215px/>
         
