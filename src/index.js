@@ -11,7 +11,7 @@ const endOfRequest =
 const totalImagesInRequest = 'Hooray! We found totalHits images.';
 const formRequest = document.querySelector('#search-form');
 const gallery = document.querySelector('.gallery');
-const findText = '';
+// const findText = '';
 let numPage = 1;
 const per_page = 40;
 let responseArray = [];
@@ -64,10 +64,42 @@ formRequest.addEventListener('submit', e => {
       });
     }
     console.log(responseArray);
-    return request.data;
+    // return request.data;
   }
-  getImage().then(console.log);
+  getImage().then(() => {
+    createCardImage(responseArray);
+    console.log;
+  });
 });
+function createCardImage(responseArray) {
+  const markup = responseArray
+    .map(
+      arrItem => `
+        <a>
+        <div class="photo-card">
+          <img src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" />
+<div class="info">
+<p class="info-item">
+      <b>Likes</b>${arrItem.likes}
+    </p>
+    <p class="info-item">
+      <b>Views</b>${arrItem.views}
+    </p>
+    <p class="info-item">
+      <b>Comments</b>${arrItem.comments}
+    </p>
+    <p class="info-item">
+      <b>Downloads</b>${arrItem.downloads}
+    </p>
+</div>
+        </div>
+        </a>
+        `
+    )
+    .join('');
+  gallery.innerHTML = markup;
+  gallery.style.display = displayFlex;
+}
 
 function emptyMessage() {
   Notiflix.Notify.info(`${emptyRequest}`);
@@ -78,10 +110,3 @@ function endMessage() {
 function totalMessage() {
   Notiflix.Notify.info(`${totalImagesInRequest}`);
 }
-// webformatURL - ссылка на маленькое изображение для списка карточек.
-// largeImageURL - ссылка на большое изображение.
-// tags - строка с описанием изображения. Подойдет для атрибута alt.
-// likes - количество лайков.
-// views - количество просмотров.
-// comments - количество комментариев.
-// downloads - количество загрузок.
