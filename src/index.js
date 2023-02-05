@@ -10,7 +10,7 @@ const emptyRequest =
 const endOfRequest =
   "We're sorry, but you've reached the end of search results.";
 const formRequest = document.querySelector('#search-form');
-const gallery = document.querySelector('.gallery');
+const galleryDesk = document.querySelector('.gallery');
 // const findText = '';
 let totalHits = 0;
 // const totalImagesInRequest = `'Hooray! We found ${totalHits} images.'`;
@@ -80,52 +80,63 @@ function createCardImage(responseArray) {
     .map(
       arrItem => `
        
-        <div class="photo-card" style="width: 320px">
-          <img src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" width=100%/>
-<div class="info" style="align-items: center">
-<ul style="display: flex; list-style: none; padding: 0 10px; justify-content:space-between; width: 100%">
-<li style="align-items: center">
+      <a class="image-link" href="${largeImageURL}">
+        <div class="photo-card">
+        <img class="gallery-image" src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" width=320px height=215px/>
+        
+<div class="info">
+<ul>
+<li>
 <p class="info-item">
 <b>Likes</b>
+</p>
 <p>
 ${arrItem.likes}
 </p>
-</p>
 </li>
-<li style="align-items: center">
+<li>
 <p class="info-item">
 <b>Views</b>
+</p>
 <p>
 ${arrItem.views}
 </p>
-</p>
 </li>
-<li style="align-items: center">
+<li>
 <p class="info-item">
 <b>Comments</b>
+</p>
 <p>
 ${arrItem.comments}
 </p>
-</p>
 </li>
-<li style="align-items: center">
+<li>
 <p class="info-item">
 <b>Downloads</b>
+</p>
 <p>
 ${arrItem.downloads}
-</p>
 </p>
 </li>
 </ul>
 </div>
         </div>
-        
+        </a>
         `
     )
     .join('');
-  gallery.innerHTML = markup;
-  // gallery.style.display = "flex";
+  galleryDesk.innerHTML = markup;
 }
+let gallery = new SimpleLightbox('.gallery a', {
+  captionsData: 'alt',
+  captionDelay: 250,
+});
+
+galleryDesk.addEventListener('click', event => {
+  event.preventDefault();
+  gallery.on('show.Simplelightbox');
+});
+
 
 function emptyMessage() {
   Notiflix.Notify.info(`${emptyRequest}`);
