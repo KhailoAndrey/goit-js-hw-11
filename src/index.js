@@ -79,12 +79,12 @@ function createCardImage(responseArray) {
   const markup = responseArray
     .map(
       arrItem => `
-        <a>
-        <div class="photo-card">
-          <img src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" />
+       
+        <div class="photo-card" style="width: 320px">
+          <img src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" width=100%/>
 <div class="info" style="align-items: center">
-<ul style="display: flex; list-style: none; align-items: center; gap: 20px">
-<li>
+<ul style="display: flex; list-style: none; padding: 0 10px; justify-content:space-between; width: 100%">
+<li style="align-items: center">
 <p class="info-item">
 <b>Likes</b>
 <p>
@@ -92,7 +92,7 @@ ${arrItem.likes}
 </p>
 </p>
 </li>
-<li>
+<li style="align-items: center">
 <p class="info-item">
 <b>Views</b>
 <p>
@@ -100,7 +100,7 @@ ${arrItem.views}
 </p>
 </p>
 </li>
-<li>
+<li style="align-items: center">
 <p class="info-item">
 <b>Comments</b>
 <p>
@@ -108,7 +108,7 @@ ${arrItem.comments}
 </p>
 </p>
 </li>
-<li>
+<li style="align-items: center">
 <p class="info-item">
 <b>Downloads</b>
 <p>
@@ -119,12 +119,12 @@ ${arrItem.downloads}
 </ul>
 </div>
         </div>
-        </a>
+        
         `
     )
     .join('');
   gallery.innerHTML = markup;
-  // gallery.style.display = flex;
+  // gallery.style.display = "flex";
 }
 
 function emptyMessage() {
