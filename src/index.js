@@ -66,16 +66,17 @@ formRequest.addEventListener('submit', e => {
   }
   getImage().then(() => {
     createCardImage(responseArray);
+    galleryDesk.innerHTML = markup;
     galleryLightBox();
   });
 });
 function createCardImage(responseArray) {
-  const markup = responseArray
+  return (markup = responseArray
     .map(
       arrItem => `       
       <a class="image-link" href="${arrItem.largeImageURL}">
         <div class="photo-card">
-        <img class="gallery-image" src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy" width=320px height=215px/>
+        <img class="gallery-image" src="${arrItem.webformatURL}" alt="${arrItem.tags}" loading="lazy"/>
         
 <div class="info">
 <ul>
@@ -117,9 +118,9 @@ ${arrItem.downloads}
         </a>
         `
     )
-    .join('');
-  galleryDesk.innerHTML = markup;
+    .join(''));
 }
+// galleryDesk.innerHTML = markup;
 
 function galleryLightBox() {
   return new SimpleLightbox('.gallery a', {

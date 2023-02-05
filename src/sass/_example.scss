@@ -18,6 +18,8 @@
   // height: 215px;
 }
 .gallery-image {
+  width: 320px;
+  height: 215px;
   object-fit: cover;
   transition: transform var(--animation-duration) var(--timing-function);
 }
