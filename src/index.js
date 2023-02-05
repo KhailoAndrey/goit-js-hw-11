@@ -10,8 +10,18 @@ const endOfRequest =
   "We're sorry, but you've reached the end of search results.";
 const totalImagesInRequest = 'Hooray! We found totalHits images.';
 const formRequest = document.querySelector('#search-form');
+const gallery = document.querySelector('.gallery');
 const findText = '';
 let numPage = 1;
+const per_page = 40;
+let responseArray = [];
+let webformatURL = null;
+let largeImageURL = null;
+let tags = null;
+let likes = 0;
+let views = 0;
+let comments = 0;
+let downloads = 0;
 
 formRequest.addEventListener('submit', e => {
   e.preventDefault();
@@ -28,17 +38,35 @@ formRequest.addEventListener('submit', e => {
         image_type: 'photo',
         orientation: 'horizontal',
         safesearch: true,
-        per_page: 40,
+        per_page: per_page,
         page: numPage,
       },
     });
-    //   console.log(request.data);
+    const pageGroup = request.data.totalHits / per_page;
+    console.log(pageGroup);
+    responseArray = [];
+    for (elem of request.data.hits) {
+      webformatURL = elem.webformatURL;
+      largeImageURL = elem.largeImageURL;
+      tags = elem.tags;
+      likes = elem.likes;
+      views = elem.views;
+      comments = elem.comments;
+      downloads = elem.downloads;
+      responseArray.push({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      });
+    }
+    console.log(responseArray);
     return request.data;
-    // } catch (error) {
-    //   console.error(error);
-    // }
   }
-  getImage().then(console.log).catch(emptyMessage());
+  getImage().then(console.log);
 });
 
 function emptyMessage() {
