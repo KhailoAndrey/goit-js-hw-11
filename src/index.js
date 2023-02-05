@@ -80,38 +80,10 @@ function createCardImage(responseArray) {
         
 <div class="info">
 <ul>
-<li>
-<p class="info-item">
-<b>Likes</b>
-</p>
-<p>
-${arrItem.likes}
-</p>
-</li>
-<li>
-<p class="info-item">
-<b>Views</b>
-</p>
-<p>
-${arrItem.views}
-</p>
-</li>
-<li>
-<p class="info-item">
-<b>Comments</b>
-</p>
-<p>
-${arrItem.comments}
-</p>
-</li>
-<li>
-<p class="info-item">
-<b>Downloads</b>
-</p>
-<p>
-${arrItem.downloads}
-</p>
-</li>
+<li><p class="info-item"><b>Likes</b></p><p>${arrItem.likes}</p></li>
+<li><p class="info-item"><b>Views</b></p><p>${arrItem.views}</p></li>
+<li><p class="info-item"><b>Comments</b></p><p>${arrItem.comments}</p></li>
+<li><p class="info-item"><b>Downloads</b></p><p>${arrItem.downloads}</p></li>
 </ul>
 </div>
         </div>
