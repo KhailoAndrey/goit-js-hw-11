@@ -28,6 +28,7 @@ let downloads = 0;
 
 formRequest.addEventListener('submit', e => {
   e.preventDefault();
+  numPage = 1;
   const findText = formRequest.elements.searchQuery.value.trim();
   console.log(findText);
 
