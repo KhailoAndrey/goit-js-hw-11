@@ -1,5 +1,5 @@
 import SimpleLightbox from 'simplelightbox';
-import 'simplelightbox/dist/simple-lightbox.min.css';
+// import 'simplelightbox/dist/simple-lightbox.min.css';
 import Notiflix from 'notiflix';
 import axios from 'axios';
 // import { findLastIndex } from 'lodash';
@@ -50,7 +50,7 @@ formRequest.addEventListener('submit', e => {
     const pageGroup = totalHits / per_page;
     console.log(pageGroup);
     responseArray = [];
-    for (elem of request.data.hits) {
+    for (const elem of request.data.hits) {
       webformatURL = elem.webformatURL;
       largeImageURL = elem.largeImageURL;
       tags = elem.tags;
