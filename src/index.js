@@ -15,7 +15,7 @@ const galleryDesk = document.querySelector('.gallery');
 let totalHits = 0;
 // const totalImagesInRequest = `'Hooray! We found ${totalHits} images.'`;
 let numPage = 1;
-const per_page = 10;
+const per_page = 40;
 let responseArray = [];
 let webformatURL = null;
 let largeImageURL = null;
@@ -136,7 +136,6 @@ galleryDesk.addEventListener('click', event => {
   event.preventDefault();
   gallery.on('show.Simplelightbox');
 });
-
 
 function emptyMessage() {
   Notiflix.Notify.info(`${emptyRequest}`);
