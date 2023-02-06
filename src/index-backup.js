@@ -19,20 +19,14 @@ let numPage = 1;
 const per_page = 40;
 // let responseArray = [];
 
-//  1. Слушаем форму сабмит и берем слово для поиска.
-//  2. Делаем запрос на бекенд используя слово для поиска.
-//  3. Получаем массив от бекенда и делаем разметку.
-//  4. Подключаем библиотеку SimpleLightBox.
-//  5. При нажатии на кнопку Загрузки отправляем следующий запрос на бекенд.
-//  6. Добавляем разметку в конец существующей.
-//  7. При новом запросе очищаем форму и разметку.
+formRequest.addEventListener('submit', e => {
+  e.preventDefault();
+  numPage = 1;
+  const findText = formRequest.elements.searchQuery.value.trim();
+  console.log(findText);
 
-// Слушаем форму
-formRequest.addEventListener('submit', createMarkupImages);
-// Запрос на бекенд
-async function getImages(findText) {
-  try {
-    return (request = await axios({
+  async function getImage() {
+    const request = await axios({
       url: `${requestUrl}`,
       params: {
         key: userId,
@@ -43,31 +37,12 @@ async function getImages(findText) {
         per_page: per_page,
         page: numPage,
       },
-    }));
-    // console.log(request.data);
-  } catch (error) {
-    emptyMessage();
-    console.error(error);
-  }
-}
-// Обработка массива с бекенда
-async function createMarkupImages(e) {
-  e.preventDefault();
-  const findText = formRequest.elements.searchQuery.value.trim();
-  const request = await getImages(findText);
-  const totalHits = request.data.totalHits;
-  console.log(request.data);
-  const arrayImages = [];
-  for (const {
-    webformatURL,
-    largeImageURL,
-    tags,
-    likes,
-    views,
-    comments,
-    downloads,
-  } of request.data.hits) {
-    arrayImages.push({
+    });
+    const totalHits = request.data.totalHits;
+    const pageGroup = totalHits / per_page;
+    console.log(pageGroup);
+    const responseArray = [];
+    for (const {
       webformatURL,
       largeImageURL,
       tags,
@@ -75,16 +50,30 @@ async function createMarkupImages(e) {
       views,
       comments,
       downloads,
-    });
+    } of request.data.hits) {
+      responseArray.push({
+        webformatURL,
+        largeImageURL,
+        tags,
+        likes,
+        views,
+        comments,
+        downloads,
+      });
+    }
+    console.log(responseArray);
+    totalMessage(totalHits);
+    return responseArray;
+    // return request.data;
   }
-  console.log(arrayImages);
-  createCardImage(arrayImages);
-  galleryLightBox();
-  // return arrayImages;
-}
-// Создание разметки
-async function createCardImage(arrayImages) {
-  const markup = arrayImages
+  getImage().then(() => {
+    createCardImage(responseArray);
+    galleryDesk.innerHTML = markup;
+    galleryLightBox();
+  });
+});
+function createCardImage(responseArray) {
+  return (markup = responseArray
     .map(
       arrItem => `       
       <a class="image-link" href="${arrItem.largeImageURL}">
@@ -103,19 +92,16 @@ async function createCardImage(arrayImages) {
         </a>
         `
     )
-    .join('');
-  galleryDesk.innerHTML = markup;
+    .join(''));
 }
+// galleryDesk.innerHTML = markup;
 
-// Подключаем библиотеку SimpleLightBox.
 function galleryLightBox() {
   return new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
 }
-// До.запрос на бекенд и добавление разметки
-function addMarkupImages() {}
 
 function emptyMessage() {
   Notiflix.Notify.info(`${emptyRequest}`);
