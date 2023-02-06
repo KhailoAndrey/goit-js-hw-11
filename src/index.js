@@ -33,8 +33,6 @@ formRequest.addEventListener('submit', async e => {
   loadBtn.classList.add('visually-hidden');
   numPage = 1;
   galleryDesk.replaceChildren();
-  // await getImages();
-  // await createMarkupImages();
   await createCardImage();
   galleryLightBox();
 });
@@ -57,8 +55,8 @@ async function getImages(findText) {
         page: numPage,
       },
     });
-    return request;
     // console.log(request.data);
+    return request.data;
   } catch (error) {
     emptyMessage();
     console.error(error);
@@ -67,13 +65,10 @@ async function getImages(findText) {
 
 // Обработка массива с бекенда
 async function createMarkupImages() {
-  // e.preventDefault();
   const findText = formRequest.elements.searchQuery.value.trim();
   const response = await getImages(findText);
-  const totalHits = response.data.totalHits;
+  const totalHits = response.totalHits;
   Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
-  // totalMessage(totalHits);
-  // console.log(request.data);
   const arrayImages = [];
   for (const {
     webformatURL,
@@ -83,7 +78,7 @@ async function createMarkupImages() {
     views,
     comments,
     downloads,
-  } of response.data.hits) {
+  } of response.hits) {
     arrayImages.push({
       webformatURL,
       largeImageURL,
