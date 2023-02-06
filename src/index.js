@@ -40,7 +40,7 @@ formRequest.addEventListener('submit', e => {
     const totalHits = request.data.totalHits;
     const pageGroup = totalHits / per_page;
     console.log(pageGroup);
-    responseArray = [];
+    const responseArray = [];
     for (const {
       webformatURL,
       largeImageURL,
