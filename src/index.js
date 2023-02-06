@@ -63,7 +63,7 @@ async function getImages(findText) {
 async function createMarkupImages() {
   // e.preventDefault();
   const findText = formRequest.elements.searchQuery.value.trim();
-  const request = await getImages(findText);
+  request = await getImages(findText);
   const totalHits = request.data.totalHits;
   totalMessage(totalHits);
   // console.log(request.data);
