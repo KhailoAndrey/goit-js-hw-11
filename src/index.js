@@ -17,6 +17,7 @@ const loadBtn = document.querySelector('.load-more');
 
 let numPage = 1;
 const per_page = 40;
+let totalHits = 0;
 // let responseArray = [];
 
 //  1. Слушаем форму сабмит и берем слово для поиска.
@@ -34,6 +35,9 @@ formRequest.addEventListener('submit', async e => {
   numPage = 1;
   galleryDesk.replaceChildren();
   await createCardImage();
+  loadBtn.classList.remove('visually-hidden');
+  Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
+
   galleryLightBox();
 });
 
@@ -67,8 +71,8 @@ async function getImages(findText) {
 async function createMarkupImages() {
   const findText = formRequest.elements.searchQuery.value.trim();
   const response = await getImages(findText);
-  const totalHits = response.totalHits;
-  Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
+  totalHits = response.totalHits;
+  // Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
   const arrayImages = [];
   for (const {
     webformatURL,
@@ -119,12 +123,12 @@ async function createCardImage() {
     )
     .join('');
   galleryDesk.insertAdjacentHTML('beforeend', markup);
-  loadBtn.classList.remove('visually-hidden');
+  // loadBtn.classList.remove('visually-hidden');
 }
 
 // Подключаем библиотеку SimpleLightBox.
 function galleryLightBox() {
-  return new SimpleLightbox('.gallery a', {
+  lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
   });
@@ -133,13 +137,13 @@ function galleryLightBox() {
 // Доп.запрос на бекенд и добавление разметки
 async function addMarkupImages() {
   numPage += 1;
-  try {
-    await createCardImage();
-  } catch {
+  if (numPage > totalHits / per_page) {
     endMessage();
     loadBtn.classList.add('visually-hidden');
   }
-  console.log(numPage);
+  await createCardImage();
+  lightbox.refresh();
+  // console.log(numPage);
 }
 
 function emptyMessage() {
