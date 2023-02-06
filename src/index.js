@@ -30,11 +30,17 @@ const per_page = 40;
 // Слушаем форму
 formRequest.addEventListener('submit', async e => {
   e.preventDefault();
-  await getImages();
-  await createMarkupImages();
+  loadBtn.classList.add('visually-hidden');
+  numPage = 1;
+  galleryDesk.replaceChildren();
+  // await getImages();
+  // await createMarkupImages();
   await createCardImage();
   galleryLightBox();
 });
+
+// Жмем кнопку подгрузки картинок
+loadBtn.addEventListener('click', addMarkupImages);
 
 // Запрос на бекенд
 async function getImages(findText) {
@@ -65,7 +71,8 @@ async function createMarkupImages() {
   const findText = formRequest.elements.searchQuery.value.trim();
   const response = await getImages(findText);
   const totalHits = response.data.totalHits;
-  totalMessage(totalHits);
+  Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
+  // totalMessage(totalHits);
   // console.log(request.data);
   const arrayImages = [];
   for (const {
@@ -116,7 +123,8 @@ async function createCardImage() {
         `
     )
     .join('');
-  galleryDesk.innerHTML = markup;
+  galleryDesk.insertAdjacentHTML('beforeend', markup);
+  loadBtn.classList.remove('visually-hidden');
 }
 
 // Подключаем библиотеку SimpleLightBox.
@@ -128,7 +136,16 @@ function galleryLightBox() {
 }
 
 // Доп.запрос на бекенд и добавление разметки
-function addMarkupImages() {}
+async function addMarkupImages() {
+  numPage += 1;
+  try {
+    await createCardImage();
+  } catch {
+    endMessage();
+    loadBtn.classList.add('visually-hidden');
+  }
+  console.log(numPage);
+}
 
 function emptyMessage() {
   Notiflix.Notify.info(`${emptyRequest}`);
@@ -136,8 +153,4 @@ function emptyMessage() {
 
 function endMessage() {
   Notiflix.Notify.info(`${endOfRequest}`);
-}
-
-function totalMessage(totalHits) {
-  Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
 }

@@ -2,7 +2,21 @@
   --timing-function: cubic-bezier(0.4, 0, 0.2, 1);
   --animation-duration: 250ms;
 }
+.load-more {
+  display: block;
+  overflow: hidden;
+  margin-left: auto;
+  margin-right: auto;
+}
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  margin: -1px;
+  border: 0;
+  padding: 0;
+}
 .gallery {
   margin: 10px;
   display: grid;
