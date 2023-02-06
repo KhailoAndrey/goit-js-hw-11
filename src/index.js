@@ -28,7 +28,14 @@ const per_page = 40;
 //  7. При новом запросе очищаем форму и разметку.
 
 // Слушаем форму
-formRequest.addEventListener('submit', createMarkupImages);
+formRequest.addEventListener('submit', async e => {
+  e.preventDefault();
+  await getImages();
+  await createMarkupImages();
+  await createCardImage();
+  galleryLightBox();
+});
+
 // Запрос на бекенд
 async function getImages(findText) {
   try {
@@ -50,13 +57,15 @@ async function getImages(findText) {
     console.error(error);
   }
 }
+
 // Обработка массива с бекенда
-async function createMarkupImages(e) {
-  e.preventDefault();
+async function createMarkupImages() {
+  // e.preventDefault();
   const findText = formRequest.elements.searchQuery.value.trim();
   const request = await getImages(findText);
   const totalHits = request.data.totalHits;
-  console.log(request.data);
+  totalMessage(totalHits);
+  // console.log(request.data);
   const arrayImages = [];
   for (const {
     webformatURL,
@@ -77,13 +86,15 @@ async function createMarkupImages(e) {
       downloads,
     });
   }
-  console.log(arrayImages);
-  createCardImage(arrayImages);
-  galleryLightBox();
-  // return arrayImages;
+  // console.log(arrayImages);
+  // createCardImage(arrayImages);
+  // galleryLightBox();
+  return arrayImages;
 }
+
 // Создание разметки
-async function createCardImage(arrayImages) {
+async function createCardImage() {
+  const arrayImages = await createMarkupImages();
   const markup = arrayImages
     .map(
       arrItem => `       
@@ -114,7 +125,8 @@ function galleryLightBox() {
     captionDelay: 250,
   });
 }
-// До.запрос на бекенд и добавление разметки
+
+// Доп.запрос на бекенд и добавление разметки
 function addMarkupImages() {}
 
 function emptyMessage() {
