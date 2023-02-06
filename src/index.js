@@ -18,7 +18,6 @@ const loadBtn = document.querySelector('.load-more');
 let numPage = 1;
 const per_page = 40;
 let totalHits = 0;
-// let responseArray = [];
 
 //  1. Слушаем форму сабмит и берем слово для поиска.
 //  2. Делаем запрос на бекенд используя слово для поиска.
@@ -72,7 +71,6 @@ async function createMarkupImages() {
   const findText = formRequest.elements.searchQuery.value.trim();
   const response = await getImages(findText);
   totalHits = response.totalHits;
-  // Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
   const arrayImages = [];
   for (const {
     webformatURL,
@@ -93,9 +91,6 @@ async function createMarkupImages() {
       downloads,
     });
   }
-  // console.log(arrayImages);
-  // createCardImage(arrayImages);
-  // galleryLightBox();
   return arrayImages;
 }
 
@@ -123,7 +118,6 @@ async function createCardImage() {
     )
     .join('');
   galleryDesk.insertAdjacentHTML('beforeend', markup);
-  // loadBtn.classList.remove('visually-hidden');
 }
 
 // Подключаем библиотеку SimpleLightBox.
@@ -143,7 +137,6 @@ async function addMarkupImages() {
   }
   await createCardImage();
   lightbox.refresh();
-  // console.log(numPage);
 }
 
 function emptyMessage() {
