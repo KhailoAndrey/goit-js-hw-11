@@ -39,7 +39,7 @@ formRequest.addEventListener('submit', async e => {
 // Запрос на бекенд
 async function getImages(findText) {
   try {
-    return (request = await axios({
+    const request = await axios({
       url: `${requestUrl}`,
       params: {
         key: userId,
@@ -50,7 +50,8 @@ async function getImages(findText) {
         per_page: per_page,
         page: numPage,
       },
-    }));
+    });
+    return request;
     // console.log(request.data);
   } catch (error) {
     emptyMessage();
