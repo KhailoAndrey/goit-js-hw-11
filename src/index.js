@@ -39,6 +39,8 @@ formRequest.addEventListener('submit', async e => {
   if (Number(totalHits) > 40) {
     loadBtn.classList.remove('visually-hidden');
     Notiflix.Notify.success(`'Hooray! We found ${totalHits} images.'`);
+  } else if (Number(totalHits) !== 0) {
+    Notiflix.Notify.success(`'Hooray! We found ${totalHits} images.'`);
   } else emptyMessage();
   galleryLightBox();
 });
@@ -121,6 +123,7 @@ async function createCardImage() {
     )
     .join('');
   galleryDesk.insertAdjacentHTML('beforeend', markup);
+  // Notiflix.Notify.success(`'Hooray! We found ${totalHits} images.'`);
 }
 
 // Подключаем библиотеку SimpleLightBox.
