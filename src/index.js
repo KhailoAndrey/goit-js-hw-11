@@ -140,9 +140,9 @@ async function addMarkupImages() {
 }
 
 function emptyMessage() {
-  Notiflix.Notify.info(`${emptyRequest}`);
+  Notiflix.Notify.failure(`${emptyRequest}`);
 }
 
 function endMessage() {
-  Notiflix.Notify.info(`${endOfRequest}`);
+  Notiflix.Notify.failure(`${endOfRequest}`);
 }
