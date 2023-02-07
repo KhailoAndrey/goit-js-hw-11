@@ -35,9 +35,11 @@ formRequest.addEventListener('submit', async e => {
   numPage = 1;
   galleryDesk.replaceChildren();
   await createCardImage();
-  loadBtn.classList.remove('visually-hidden');
-  Notiflix.Notify.info(`'Hooray! We found ${totalHits} images.'`);
-
+  console.log(totalHits);
+  if (Number(totalHits) > 40) {
+    loadBtn.classList.remove('visually-hidden');
+    Notiflix.Notify.success(`'Hooray! We found ${totalHits} images.'`);
+  } else emptyMessage();
   galleryLightBox();
 });
 
@@ -145,5 +147,5 @@ function emptyMessage() {
 }
 
 function endMessage() {
-  Notiflix.Notify.failure(`${endOfRequest}`);
+  Notiflix.Notify.info(`${endOfRequest}`);
 }
