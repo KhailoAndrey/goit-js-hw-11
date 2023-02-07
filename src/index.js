@@ -18,6 +18,7 @@ const loadBtn = document.querySelector('.load-more');
 let numPage = 1;
 const per_page = 40;
 let totalHits = 0;
+let lightbox = '';
 
 //  1. Слушаем форму сабмит и берем слово для поиска.
 //  2. Делаем запрос на бекенд используя слово для поиска.
@@ -122,10 +123,10 @@ async function createCardImage() {
 
 // Подключаем библиотеку SimpleLightBox.
 function galleryLightBox() {
-  return (lightbox = new SimpleLightbox('.gallery a', {
+  lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
-  }));
+  });
 }
 
 // Доп.запрос на бекенд и добавление разметки
