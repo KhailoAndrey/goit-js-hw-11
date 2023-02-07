@@ -122,10 +122,10 @@ async function createCardImage() {
 
 // Подключаем библиотеку SimpleLightBox.
 function galleryLightBox() {
-  lightbox = new SimpleLightbox('.gallery a', {
+  return (lightbox = new SimpleLightbox('.gallery a', {
     captionsData: 'alt',
     captionDelay: 250,
-  });
+  }));
 }
 
 // Доп.запрос на бекенд и добавление разметки
